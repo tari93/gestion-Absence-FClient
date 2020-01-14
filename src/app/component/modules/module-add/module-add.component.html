@@ -1,0 +1,54 @@
+<mat-toolbar>
+    <span>Nouveau module</span>
+    <span class="fill-remaining-space"></span>
+    <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabindex="-1">
+        <mat-icon>clear</mat-icon>
+    </button>
+</mat-toolbar>
+<form [formGroup]="moduleForm" class="ormvah-form" (submit)="onSubmit()">
+    <mat-card class="user-card">
+        <mat-card-content>
+    <div class="controles-container">
+            <input type="hidden" formControlName="id">
+            <mat-form-field>
+                <input formControlName="libelle" matInput placeholder="Libelle">
+            </mat-form-field>
+            <mat-form-field>
+                <input formControlName="chargeHoraire" matInput placeholder="Charge Horaire" type="number">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-chip-list #chipList>
+                  <mat-chip
+                      *ngFor="let matiere of chipSelectedMatieres"
+                      [selectable]=true
+                      [removable]=true
+                      (removed)="removeMatiere(matiere)">
+                      {{matiere.libelle}}
+                      <mat-icon matChipRemove>cancel</mat-icon>
+                  </mat-chip>
+                  <input
+                      placeholder="Your Matiere"
+                      #matiereInput
+                      [formControl]="matiereControl"
+                      [matAutocomplete]="auto"
+                      [matChipInputFor]="chipList"
+                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                      [matChipInputAddOnBlur]=true
+                      (matChipInputTokenEnd)="addMatiere($event)">
+                </mat-chip-list>
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="matiereSelected($event)">
+                  <mat-option *ngFor="let thisMatiereName of filteredMatieres | async" [value]="thisMatiereName">
+                      {{thisMatiereName}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>       
+          <!--  <pre>{{chipSelectedMatieres|json}}</pre> -->
+            <div class="button-row">
+                <button mat-raised-button color="primary" type="submit" [disabled]="moduleForm.invalid">
+                    Ajouter
+                </button>
+            </div>
+        </div>  
+    </mat-card-content>
+    </mat-card>    
+</form >

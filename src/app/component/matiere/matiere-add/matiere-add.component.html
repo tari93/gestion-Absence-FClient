@@ -1,0 +1,36 @@
+<mat-toolbar>
+    <span>Nouvelle matiere</span>
+    <span class="fill-remaining-space"></span>
+    <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabindex="-1">
+        <mat-icon>clear</mat-icon>
+    </button>
+</mat-toolbar>
+<form [formGroup]="matiereForm" class="ormvah-form" (submit)="onSubmit()">
+    <mat-card class="user-card">
+        <mat-card-content>
+    <div class="controles-container">
+            <input type="hidden" formControlName="id">
+            <mat-form-field>
+                <input formControlName="libelle" matInput placeholder="Libelle">
+            </mat-form-field>
+            <mat-form-field>
+                <input formControlName="chargeHoraire" matInput placeholder="Charge Horaire" type="number">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-select formControlName="profEnseignant" >
+                    <mat-label>Selectionnez le professeur</mat-label>
+                    <ng-container *ngFor="let p of enseignantList">
+                        <mat-option [value]="p">{{p.nom}} {{p.prenom}}</mat-option>
+                    </ng-container>
+                </mat-select>
+            </mat-form-field>
+            
+            <div class="button-row">
+                <button mat-raised-button color="primary" type="submit" [disabled]="matiereForm.invalid">
+                    Ajouter
+                </button>
+            </div>
+        </div>  
+    </mat-card-content>
+    </mat-card>    
+</form >
